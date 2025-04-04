@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NetPulse Listener</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e0e2c;
+      --accent: #00ffe7;
+      --text: #ffffff;
+      --pulse: #00d4ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    html, body {
+      background: var(--bg);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      height: 100%;
+      overflow-x: hidden;
+      scrollbar-width: none;
+    }
+
+    body::-webkit-scrollbar {
+      display: none;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .container {
+      padding: 8rem 1.5rem;
+      text-align: center;
+      animation: fadeIn 2s ease-out;
+    }
+
+    h1, .glitch {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      color: var(--accent);
+      animation: pulseGlow 3s infinite ease-in-out;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 2rem auto;
+      line-height: 1.6;
+      color: #ccc;
+    }
+
+    .terminal-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--accent);
+      padding: 2rem;
+      border-radius: 12px;
+      margin: 5rem auto;
+      max-width: 800px;
+      text-align: left;
+      font-family: monospace;
+      box-shadow: 0 0 20px var(--accent);
+      animation: float 4s ease-in-out infinite;
+      min-height: 150px;
+    }
+
+    .glow-text {
+      color: var(--pulse);
+      text-shadow: 0 0 5px var(--pulse), 0 0 10px var(--pulse);
+    }
+
+    .command {
+      color: #00ff9d;
+    }
+
+    .footer {
+      margin-top: 10rem;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { text-shadow: 0 0 5px var(--accent), 0 0 15px var(--accent); }
+      50% { text-shadow: 0 0 20px var(--accent), 0 0 40px var(--accent); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .neon-border {
+      border: 2px solid var(--accent);
+      border-radius: 20px;
+      box-shadow: 0 0 15px var(--accent);
+      padding: 3rem;
+      animation: borderPulse 3s infinite alternate;
+      margin-top: 5rem;
+    }
+
+    @keyframes borderPulse {
+      from { box-shadow: 0 0 5px var(--accent); }
+      to { box-shadow: 0 0 25px var(--accent); }
+    }
+
+    .glitch {
+      position: relative;
+      animation: glitch 1s infinite;
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(-2px, -2px); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
+    }
+
+    .pointer { cursor: pointer; }
+    .yellow { color: yellow; }
+    .blue { color: blue; }
+    .grey { color: grey; }
+    .white { color: white; }
+
+    svg.wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: -2;
+    }
+
+    @media (max-width: 600px) {
+      .terminal-box, .neon-border {
+        padding: 1rem;
+        margin: 3rem 1rem;
+      }
+    }
+
+    .interactive-particles {
+      position: absolute;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .noul { underline: false; }
+
+    .install-button {
+      display: inline-block;
+      width: 100%;
+      padding: 15px 30px;
+      margin: 3rem 0;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      background: var(--accent);
+      border: none;
+      border-radius: 50px;
+      color: var(--bg);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--accent);
+      transition: all 0.3s ease;
+    }
+
+    .install-button:hover {
+      background: #00d4ff;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px var(--pulse);
+    }
+
+    .install-button:active {
+      background: #00a2b7;
+      box-shadow: 0 0 10px var(--pulse);
+      transform: scale(1);
+    }
+
+    .section {overflow: none;}
+  </style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<div class="container section">
+  <div class="glitch">NetPulse Listener</div>
+  <p class="glow-text">Your futuristic, no-nonsense HTTP listener for rapid-fire testing and response handling.</p>
+
+  <div class="terminal-box section" id="logBox">
+    <p class="command">natu@NNOS<span class="white">:</span><span class="blue">~</span><span class="white">$</span> <span class="white">python3 netpulse.py -c -p 8080 -r response.txt</span></p>
+  </div>
+
+  <button class="install-button neon-border" onclick="window.open('http://github.com/Natuworkguy/NetPulse-Listener/', '_blank')">Install now</button>
+
+  <div class="neon-border section">
+    <p>⚙️ Easy to run</p>
+    <p>🚀 Instant Response</p>
+    <p>🧠 Built by <a href="http://github.com/Natuworkguy/" target="_blank" class="pointer noul" style="color: var(--pulse)">Natuworkguy</a></p>
+    <p><a href="mailto:info@nathannetwork.com" class="pointer" style="color: var(--accent); text-decoration: none;">info@nathannetwork.com</a></p>
+  </div>
+
+  <div class="footer">
+    <p>MIT Licensed • 2025 • v1.0</p>
+  </div>
+</div>
+
+<svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+  <path fill="#00ffe7" fill-opacity="0.1" d="M0,64L60,80C120,96,240,128,360,122.7C480,117,600,75,720,85.3C840,96,960,160,1080,181.3C1200,203,1320,181,1380,170.7L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+</svg>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+  particlesJS("particles-js", {
+    "particles": {
+      "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
+      "color": { "value": "#00ffe7" },
+      "shape": { "type": "circle" },
+      "opacity": { "value": 0.5 },
+      "size": { "value": 3 },
+      "line_linked": { "enable": true, "distance": 150, "color": "#00ffe7", "opacity": 0.4, "width": 1 },
+      "move": { "enable": true, "speed": 2 }
+    },
+    "interactivity": {
+      "events": {
+        "onhover": { "enable": true, "mode": "repulse" },
+        "onclick": { "enable": true, "mode": "push" }
+      }
+    }
+  });
+
+  const logBox = document.getElementById('logBox');
+  const logs = [
+    '<p class="yellow"><strong class="blue">[*]</strong> Listening on 0.0.0.0:80 continuously</p>',
+    '<p class="yellow"><strong class="blue">[*]</strong> Press <strong class="grey">CTRL + C</strong> to exit.</p>',
+  ];
+
+  let i = 0;
+  setInterval(() => {
+    if (i < logs.length) {
+      logBox.innerHTML += logs[i++];
+      logBox.scrollTop = logBox.scrollHeight;
+    }
+  }, 1500);
+</script>
+</body>
+</html>
